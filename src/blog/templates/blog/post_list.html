@@ -7,6 +7,10 @@
 </head>
 <body>
     <h2>Posts</h2>
+    <form action="{% url 'post_list' %}" method="GET">
+        <input type="text" name="filtro" id="">
+        <button type="submit">Filtrar por título o contenido</button>
+    </form>
     <div class="post">
         {% for post in posts %}
             <h3>{{post.title}}</h3>
