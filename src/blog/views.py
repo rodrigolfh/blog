@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comment
 from .forms import PostForm
 
@@ -40,7 +40,6 @@ def crear_posteo(request):
     
     return render(request, 'blog/crear_posteo.html', {'form':form})
 
-
 def modificar_posteo(request, id):
     post = Post.objects.get(pk=id)
     form = PostForm(instance=post)
@@ -51,3 +50,11 @@ def modificar_posteo(request, id):
     else:
         return render(request, 'blog/modificar_posteo.html', {'form':form})
     
+def eliminar_posteo(request, id):
+    post = Post.objects.get(pk=id)
+
+    if request.method == "POST":
+        post.delete()
+        return redirect('post_list')
+    
+    return render(request, 'blog/eliminar_posteo.html', {'post': post})

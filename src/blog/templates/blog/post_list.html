@@ -20,6 +20,7 @@
             <p>{{post.content}}</p>
             <p>Autor: {{post.author.username}}</p>
             <p>Creado el: {{post.created_at}}</p>
+            <a href="{% url 'eliminar_posteo' post.id %}"><input type='submit' value='Eliminar'/></a>
         {% endfor %}
     </div>
 </body>
