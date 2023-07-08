@@ -20,7 +20,10 @@
             <p>{{post.content}}</p>
             <p>Autor: {{post.author.username}}</p>
             <p>Creado el: {{post.created_at}}</p>
-            <a href="{% url 'eliminar_posteo' post.id %}"><input type='submit' value='Eliminar'/></a>
+            <form action="{% url 'eliminar_posteo' post.id %}" method="POST">
+                {% csrf_token %}
+                <button type='submit'>Eliminar</button>
+            </form>
         {% endfor %}
     </div>
 </body>

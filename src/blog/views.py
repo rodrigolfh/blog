@@ -57,4 +57,3 @@ def eliminar_posteo(request, id):
         post.delete()
         return redirect('post_list')
     
-    return render(request, 'blog/eliminar_posteo.html', {'post': post})
