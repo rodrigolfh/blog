@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Posts</h2>
+    <a href="{% url 'crear_posteo' %}"><input type='submit' value='Crear nuevo posteo'/></a>
+    <br>
+    <br>
+    <form action="{% url 'post_list' %}" method="GET">
+        <input type="text" name="filtro" id="">
+        <button type="submit">Filtrar por título o contenido</button>
+    </form>
+    <div class="post">
+        {% for post in posts %}
+            <h3><a href="{% url 'modificar_posteo' post.id %}">{{post.title}}</a></h3>
+            <p>{{post.content}}</p>
+            <p>Autor: {{post.author.username}}</p>
+            <p>Creado el: {{post.created_at}}</p>
+            <form action="{% url 'eliminar_posteo' post.id %}" method="POST">
+                {% csrf_token %}
+                <button type='submit'>Eliminar</button>
+            </form>
+        {% endfor %}
+    </div>
+</body>
+</html>
