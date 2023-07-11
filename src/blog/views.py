@@ -1,23 +1,24 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comment
 from .forms import PostForm
+from django.views.generic import ListView
 
 # Create your views here.
 
-def post_list(request):
+# def post_list(request):
 
-    filtro = request.GET.get('filtro')
+#     filtro = request.GET.get('filtro')
 
-    if filtro:
-        posts = Post.objects.filter(title__icontains=filtro)
-    else:
-        posts = Post.objects.all()
+#     if filtro:
+#         posts = Post.objects.filter(title__icontains=filtro)
+#     else:
+#         posts = Post.objects.all()
 
-    return render(
-        request,
-        'blog/post_list.html',
-        {'posts':posts}
-    )
+#     return render(
+#         request,
+#         'blog/post_list.html',
+#         {'posts':posts}
+#     )
 
 def crear_posteo(request):
     form = PostForm()
@@ -56,4 +57,18 @@ def eliminar_posteo(request, id):
     if request.method == "POST":
         post.delete()
         return redirect('post_list')
-    
+
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'post'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        filtro = self.request.GET.get('filtro')
+
+        if filtro:
+            queryset = queryset.filter(title__icontains=filtro)
+
+        return queryset
